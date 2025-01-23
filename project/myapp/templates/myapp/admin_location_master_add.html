@@ -1,0 +1,55 @@
+{% extends 'myapp/admin_base.html' %}
+{% load static %}
+{% block background %}{% endblock %}
+{% block body %}
+
+<center>
+    <h2><font color="#366092">Location Master Add</font></h2>
+	<div class="container">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col">
+    <form name="frm" role="form" action="{% url 'admin_location_master_add' %}" method="post">
+        {% csrf_token %}
+         <div class="form-group">
+			 <label for="loc_name">Location Name</label>
+	        <input type="text" class="form-control" name="loc_name"
+				   placeholder="Enter name" required="required" id="loc_name">
+		 </div>
+	    <div class="form-group">
+			<label for="addr1">Address </label>
+	            <input type="text"  class="form-control" name="addr1" placeholder="Street"  id="addr1">
+                <input type="text"  class="form-control" name="addr2" placeholder="City" >
+                <input type="text"  class="form-control" name="addr3" placeholder="State" >
+                <input type="text"  class="form-control" name="pin" placeholder="pin" >
+
+		</div>
+	    <div class="form-group">
+			<label for="addr1">Latitude</label>
+	        <input type="text"  class="form-control" name="lat" placeholder="Enter latitude">
+	    </div>
+	    <div class="form-group">
+			<label for="lng">Longitude</label>
+	        <input type="text"  class="form-control" name="lng" placeholder="Enter longitude" id="lng">
+	    </div>
+	    <div class="form-group">
+			<label for="addr1">Radius</label>
+	        <input type="text"  class="form-control" name="radius" placeholder="Enter radius" id="radius">
+	    </div>
+	    <div class="form-group">
+			<label for="remarks">Remarks</label>
+			<textarea  name="remarks" class="form-control" placeholder="Enter remarks" id="remarks"></textarea>
+		</div>
+	     <button type="submit"
+        class="btn btn-info" id="bt" name="bt">Add</button>
+        <button type="reset"
+        class="btn btn-info" id="rt" name="rt">Reset</button>
+
+    </form>
+			</div>
+			<div class="col"></div>
+		</div>
+		{{msg}}
+	</div>
+</center>
+{% endblock %}

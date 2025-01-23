@@ -1,0 +1,13 @@
+{% extends 'myapp/staff_base.html' %}
+{% load static %}
+{% block title %}Welcome Staff{% endblock %}
+{% block body %}
+<center>
+
+        <form name="frm" action="" method="post">
+            {% csrf_token %}
+            <h2><font color="#366092">The analysed probability is {{ category_name}} and score is {{percentage}}%</font></h2>
+
+        </form>
+</center>
+{% endblock %}

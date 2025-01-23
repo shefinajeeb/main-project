@@ -1,0 +1,7 @@
+1. user_login - id, uname ,passwd ,u_type 
+2. user_details - id, user_id ,fname ,lname ,gender ,dob ,addr ,pin ,contact ,email
+3. pic_pool - id, pic_path ,category_master_id ,location_master_id 
+4. location_master - id, loc_name ,addr1 ,addr2 ,addr3 ,pin ,lat ,lng ,radius ,remarks 
+5. category_master - id, category_name 
+6. user_search_history - id, user_id ,pic_path ,result ,dt ,tm ,status 
+7. general_news - id, user_id ,subject ,news ,dt ,tm ,status

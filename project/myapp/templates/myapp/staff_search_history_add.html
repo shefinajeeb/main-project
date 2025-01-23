@@ -1,0 +1,30 @@
+{% extends 'myapp/staff_base.html' %}
+{% load static %}
+{% block title %}Analysis{% endblock %}
+{% block body %}
+<center>
+    <h2><font color="#366092">Satellite Pic Analysis</font></h2>
+    <div class="container">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col">
+    <form name="frm" role="form" action="{% url 'staff_search_history_add' %}"
+          method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+			 <label for="document">Image</label>
+	        <input type="file" name="document" class="form-control" id="document">
+        </div>
+        <button type="submit" class="btn btn-info"
+                id="bt" name="bt">Analyse</button>
+        <button type="reset" class="btn btn-info"
+                id="rt" name="rt">Reset</button>
+
+    </form>
+    {{msg}}
+            </div>
+             <div class="col"></div>
+        </div>
+    </div>
+</center>
+{% endblock %}
