@@ -1,0 +1,8 @@
+django
+opencv-python==4.5.1.48
+numpy==1.21.0
+tensorflow==2.2
+pillow==8.2.0
+keras==2.4.0
+h5py==2.10.0
+#plotly==4.14.3
