@@ -1,0 +1,33 @@
+{% extends 'myapp/admin_base.html' %}
+{% load static %}
+{% block background %}{% endblock %}
+{% block body %}
+
+<center>
+
+    <h2><font color="#366092">Category Add</font></h2>
+	<div class="container">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col">
+    <form name="frm" role="form" action="{% url 'admin_category_master_add' %}" method="post">
+        {% csrf_token %}
+       <div class="form-group">
+            <label for="category_name">Category Name :</label>
+	        <input type="text"  class="form-control" name="category_name"  id="category_name" placeholder="Enter category name" required="required"></td>
+	   </div>
+	     <button type="submit"
+        class="btn btn-info" id="bt" name="bt">Add</button>
+        <button type="reset"
+        class="btn btn-info" id="rt" name="rt">Reset</button>
+        <br>
+
+		{{msg}}
+    </form>
+			</div>
+			 <div class="col"></div>
+		</div>
+		{{msg}}
+	</div>
+</center>
+{% endblock %}

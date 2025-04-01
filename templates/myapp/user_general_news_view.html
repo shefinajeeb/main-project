@@ -1,0 +1,41 @@
+{% extends 'myapp/user_base.html' %}
+{% load static %}
+{% block background %}{% endblock %}
+{% block body %}
+
+<center>
+
+    <h2><font color="#366092">General News</font></h2>
+
+    <form name="frm" action="" method="post">
+            {% csrf_token %}
+            <div class='container'>
+        <table class="table table-striped table-bordered">
+            <thead>
+        <tr>
+            <th>ID</th>
+            <th>Subject</th>
+            <th>News</th>
+            <th>Date/Time</th>
+            <!-- <th>Action</th> -->
+        </tr>
+            </thead>
+            <tbody>
+        {% for gn_obj in news_list %}
+        <tr class="info ">
+            <td>{{ gn_obj.id }}</td>
+            <td>{{ gn_obj.subject }}</td>
+            <td>{{ gn_obj.news }}</td>
+            <td>{{ gn_obj.dt }}/{{ gn_obj.tm }}</td>
+            <!-- <td><a  class="btn btn-danger" href="../staff_general_news_delete?id={{c.id}}">Delete</a></td> -->
+        </tr>
+        {% endfor %}
+            </tbody>
+        </table>
+		{{msg}}
+        <br/>
+        <!-- <a class="btn btn-info" href="{% url 'staff_general_news_add' %}">Add News</a> -->
+    </div>
+    </form>
+</center>
+{% endblock %}

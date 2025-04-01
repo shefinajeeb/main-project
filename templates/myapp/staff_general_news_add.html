@@ -1,0 +1,37 @@
+{% extends 'myapp/staff_base.html' %}
+{% load static %}
+{% block background %}{% endblock %}
+{% block body %}
+
+<center>
+
+    <h2><font color="#366092">News Add</font></h2>
+	<div class="container">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col">
+    <form name="frm" role="form" action="{% url 'staff_general_news_add' %}" method="post">
+        {% csrf_token %}
+       <div class="form-group">
+            <label for="subject">subject :</label>
+	        <input type="text"  class="form-control" name="subject"  id="subject" placeholder="Enter subject" required>
+	   </div>
+       <div class="form-group">
+        <label for="news">News :</label>
+        <textarea  class="form-control" name="news"  id="news" required></textarea>
+   </div>
+	     <button type="submit"
+        class="btn btn-info" id="bt" name="bt">Add</button>
+        <button type="reset"
+        class="btn btn-info" id="rt" name="rt">Reset</button>
+        <br>
+
+		{{msg}}
+    </form>
+			</div>
+			 <div class="col"></div>
+		</div>
+		{{msg}}
+	</div>
+</center>
+{% endblock %}
