@@ -16,10 +16,10 @@ def predict(root, infile):
 
     # Loads label file, strips off carriage return
     label_lines = [line.rstrip() for line
-                   in tf.gfile.GFile(f"{root}/logs_1/trained_labels.txt")]
+                   in tf.gfile.GFile(f"{root}/logs/trained_labels.txt")]
 
     # Unpersists graph from file
-    with tf.gfile.FastGFile(f"{root}/logs_1/trained_graph.pb", 'rb') as f:
+    with tf.gfile.FastGFile(f"{root}/logs/trained_graph.pb", 'rb') as f:
         graph_def = tf.GraphDef()
         graph_def.ParseFromString(f.read())
         _ = tf.import_graph_def(graph_def, name='')
@@ -41,5 +41,3 @@ def predict(root, infile):
             result = result + str('%s (score = %.5f)' % (human_string, score))
             result = result + ', '
         return result
-
-predict('.', '1.png')
