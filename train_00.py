@@ -380,7 +380,7 @@ def cache_bottlenecks(sess, image_lists, image_dir, bottleneck_dir,
                                  jpeg_data_tensor, bottleneck_tensor)
 
                 how_many_bottlenecks += 1
-                if how_many_bottlenecks % 100 == 0:
+                if how_many_bottlenecks % 1000 == 0:
                     print(str(how_many_bottlenecks) + ' bottleneck files created.')
 
 
@@ -622,6 +622,7 @@ def variable_summaries(var):
         tf.summary.scalar('max', tf.reduce_max(var))
         tf.summary.scalar('min', tf.reduce_min(var))
         tf.summary.histogram('histogram', var)
+        
 
 
 def add_final_training_ops(class_count, final_tensor_name, bottleneck_tensor):
@@ -761,6 +762,8 @@ def main(_):
         # Create the operations we need to evaluate the accuracy of our new layer.
         evaluation_step, prediction = add_evaluation_step(
                 final_tensor, ground_truth_input)
+        
+        
 
         # Merge all the summaries and write them out to the summaries_dir
         merged = tf.summary.merge_all()
@@ -775,6 +778,8 @@ def main(_):
         sess.run(init)
 
         # Run the training for as many cycles as requested on the command line.
+        acc_val = []
+        acc_test = []
         for i in range(FLAGS.how_many_training_steps):
             # Get a batch of input bottleneck values, either calculated fresh every
             # time with distortions applied, or from the cache stored on disk.
@@ -818,14 +823,10 @@ def main(_):
                         feed_dict={bottleneck_input: validation_bottlenecks,
                                    ground_truth_input: validation_ground_truth})
                 validation_writer.add_summary(validation_summary, i)
+                acc_val.append(validation_accuracy)
+                acc_test.append(train_accuracy)
                 print('Step: %d, Train accuracy: %.4f%%, Cross entropy: %f, Validation accuracy: %.1f%% (N=%d)' % (i,
                         train_accuracy * 100, cross_entropy_value, validation_accuracy * 100, len(validation_bottlenecks)))
-       
-       
-      
-
-
-
 
         # We've completed all our training, so run a final test evaluation on
         # some new images we haven't used before.
@@ -841,6 +842,25 @@ def main(_):
         print('Final test accuracy = %.1f%% (N=%d)' % (
                 test_accuracy * 100, len(test_bottlenecks)))
 
+        ###########################################################
+        import matplotlib.pyplot as plt
+
+        epochs = range(1, len(acc_val)+1)
+
+        plt.plot(epochs, acc_test, 'bo', label='Training acc')
+        plt.plot(epochs, acc_val, 'b', label='Validation acc')
+        plt.title('Training and validation accuracy')
+        plt.legend()
+
+        #plt.figure()
+
+        # plt.plot(epochs, loss, 'bo', label='Training loss')
+        # plt.plot(epochs, val_loss, 'b', label='Validation loss')
+        # plt.title('Training and validation loss')
+        # plt.legend()
+
+        plt.show()
+        #############################################################
         if FLAGS.print_misclassified_test_images:
             print('=== MISCLASSIFIED TEST IMAGES ===')
             for i, test_filename in enumerate(test_filenames):
@@ -1013,21 +1033,3 @@ if __name__ == '__main__':
         )
     FLAGS, unparsed = parser.parse_known_args()
     tf.app.run(main=main, argv=[sys.argv[0]] + unparsed)
-history = model.fit(X_train, Y_train, validation_data=(X_test, Y_test), batch_size=32, epochs=10, verbose=1)
-
-
-import matplotlib.pyplot as plt
-# Get training and test loss histories
-training_loss = history.history['loss']
-test_loss = history.history['val_loss']
-
-# Create count of the number of epochs
-epoch_count = range(1, len(training_loss) + 1)
-
-# Visualize loss history
-plt.plot(epoch_count, training_loss, 'r--')
-plt.plot(epoch_count, test_loss, 'b-')
-plt.legend(['Training Loss', 'Test Loss'])
-plt.xlabel('Epoch')
-plt.ylabel('Loss')
-plt.show();
